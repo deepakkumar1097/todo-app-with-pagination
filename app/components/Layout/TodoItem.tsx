@@ -8,8 +8,13 @@ import ShowInput from "./ShowInput";
 export default function TodoItem() {
   const [editModes, setEditModes] = useState([]);
   const [editedContent, setEditedContent] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const todos = useSelector((state) => state.todos);
   const dispatch = useDispatch();
+  const itemsPerPage = 40;
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = currentPage * itemsPerPage;
 
   function EditInputHandler(index) {
     const newEditModes = [...editModes];
@@ -58,10 +63,13 @@ export default function TodoItem() {
       });
     });
   }, []);
+
+  const totalItems = todos.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
   return (
     <div className="todo-items-container w-full mt-5">
-      {todos.map((todo, index) => (
-        <div className="todo-item flex mt-5 justify-between items-center px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
+      {todos.slice(startIndex, endIndex).map((todo, index) => (
+        <div className="todo-item flex flex-col mt-5 justify-between items-center px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800 sm:flex-row">
           <div className="flex">
             <input
               type="checkbox"
@@ -122,6 +130,25 @@ export default function TodoItem() {
           </div>
         </div>
       ))}
+      <div className="pagination mt-5 flex items-center justify-center">
+        <button
+          className="text-white linear mr-2 rounded-md bg-black px-4 py-2 text-center font-medium transition duration-200 hover:!bg-slate-800"
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Prev
+        </button>
+        <span>
+          {currentPage} of {totalPages}
+        </span>
+        <button
+          className="text-white linear ml-2 rounded-md bg-black px-4 py-2 text-center font-medium transition duration-200 hover:!bg-slate-800"
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }

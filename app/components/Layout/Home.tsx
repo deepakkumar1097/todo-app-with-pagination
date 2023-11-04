@@ -14,16 +14,13 @@ export default function Home() {
 
   function handleAddTodo() {
     if (newTodoTitle.trim() !== "") {
-      // Create a new todo object
       const newTodo = {
-        id: Date.now(), // You can generate a unique ID as needed
+        id: Date.now(),
         title: newTodoTitle,
+        completed: false,
       };
 
-      // Dispatch the action to add the new todo
       dispatch(addTodo(newTodo));
-
-      // Reset the input field
       setNewTodoTitle("");
 
       // Close the input container
@@ -35,7 +32,7 @@ export default function Home() {
     <div className="home-container flex flex-col justify-center items-center  bg-slate-200	w-full rounded-md bg-cover py-2">
       <div className="flex items-center justify-between px-[30px] py-[30px] md:px-[64px] md:py-[56px] max-w-[95%] xl:max-w-[800px] w-[95%]">
         <p className=" max-w-full font-medium py-[10px] px-[10px] md:w-[64%] lg:w-[40%] xl:w-[72%] 2xl:w-[60%] 3xl:w-[45%]">
-          Deepak -Todo List
+          Todo List
         </p>
         <button
           className="text-white linear rounded-md bg-black px-4 py-2 text-center font-medium transition duration-200 hover:!bg-slate-800"
