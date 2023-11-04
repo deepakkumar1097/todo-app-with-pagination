@@ -1,11 +1,34 @@
 import React, { useState } from "react";
 import ShowInput from "./ShowInput";
-import ExpandCollapse from "./ExpandCollpase";
+import { useDispatch } from "react-redux";
+import { addTodo } from "../../redux/action";
 
 export default function Home() {
   const [show, setShow] = useState(false);
+  const [newTodoTitle, setNewTodoTitle] = useState("");
+  const dispatch = useDispatch();
+
   function AddInputHandler() {
     setShow(!show);
+  }
+
+  function handleAddTodo() {
+    if (newTodoTitle.trim() !== "") {
+      // Create a new todo object
+      const newTodo = {
+        id: Date.now(), // You can generate a unique ID as needed
+        title: newTodoTitle,
+      };
+
+      // Dispatch the action to add the new todo
+      dispatch(addTodo(newTodo));
+
+      // Reset the input field
+      setNewTodoTitle("");
+
+      // Close the input container
+      setShow(false);
+    }
   }
 
   return (
@@ -22,7 +45,16 @@ export default function Home() {
         </button>
       </div>
       <div className={`show-input-container ${show ? "show" : ""}`}>
-        <ShowInput />
+        <ShowInput
+          label="Title"
+          type="text"
+          name="todo"
+          placeholder="Enter Todo"
+          value={newTodoTitle}
+          onChange={(e) => setNewTodoTitle(e.target.value)}
+          buttonName="Add"
+          onClick={handleAddTodo}
+        />
       </div>
     </div>
   );
