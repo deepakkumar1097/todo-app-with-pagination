@@ -18,6 +18,7 @@ export default function Home() {
         id: Date.now(),
         title: newTodoTitle,
         completed: false,
+        userId: Math.round(Math.random() * 10),
       };
 
       dispatch(addTodo(newTodo));

@@ -7,7 +7,7 @@ const todoReducer = (state = initialState, action) => {
     case "ADD_TODO":
       return {
         ...state,
-        todos: [...state.todos, action.payload],
+        todos: state.todos.concat(action.payload),
       };
     case "UPDATE_TODO":
       return {

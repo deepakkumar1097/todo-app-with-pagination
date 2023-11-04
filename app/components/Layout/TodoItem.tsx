@@ -17,18 +17,21 @@ export default function TodoItem() {
   const endIndex = currentPage * itemsPerPage;
 
   function EditInputHandler(index) {
+    console.log(index);
     const newEditModes = [...editModes];
     newEditModes[index] = !newEditModes[index];
     setEditModes(newEditModes);
   }
 
   function handleContentChange(index, newContent) {
+    console.log(index);
     const newEditedContent = [...editedContent];
     newEditedContent[index] = newContent;
     setEditedContent(newEditedContent);
   }
 
   function saveContent(index) {
+    console.log(index);
     if (editedContent[index]) {
       dispatch(
         updateTodo({ id: todos[index].id, title: editedContent[index] })
@@ -38,12 +41,15 @@ export default function TodoItem() {
   }
 
   function deleteItem(index) {
+    console.log(index);
     const todoId = todos[index].id;
     dispatch(deleteTodo(todoId));
   }
 
   function toggleCompleted(index) {
+    console.log(index);
     const updatedTodos = [...todos];
+    console.log(updatedTodos);
     updatedTodos[index] = {
       ...updatedTodos[index],
       completed: !updatedTodos[index].completed,
@@ -70,7 +76,7 @@ export default function TodoItem() {
     <div className="todo-items-container w-full mt-5">
       {todos.slice(startIndex, endIndex).map((todo, index) => (
         <div className="todo-item flex flex-col mt-5 justify-between items-center px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800 sm:flex-row">
-          <div className="flex">
+          <div className="flex w-1/2">
             <input
               type="checkbox"
               className="accent-black mr-2"
@@ -79,8 +85,8 @@ export default function TodoItem() {
             ></input>
             <p>{todo.title}</p>
           </div>
-          <div className="flex flex-col justify-center items-center">
-            <div className="">
+          <div className="flex flex-col justify-center items-center my-4 sm:my-0  w-1/2">
+            <div className="flex">
               <button
                 onClick={() => EditInputHandler(index)}
                 className="text-white linear rounded-md bg-black mr-2 px-4 py-2 text-center font-medium transition duration-200 hover:!bg-slate-800"
